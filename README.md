@@ -1,6 +1,133 @@
-# runpod-worker-comfy
+# runpod-worker-comfy (Qwen-Image Fork)
 
-> [ComfyUI](https://github.com/comfyanonymous/ComfyUI) as a serverless API on [RunPod](https://www.runpod.io/)
+> [ComfyUI](https://github.com/comfyanonymous/ComfyUI) with Qwen-Image FP8 as a serverless API on [RunPod](https://www.runpod.io/)
+
+## Quick Start
+
+```bash
+# Build Docker image
+bin/build dev
+
+# Push to Docker Hub
+bin/push dev
+
+# Test locally
+bin/test-local
+```
+
+## Qwen-Image Setup
+
+This fork includes automatic provisioning for Qwen-Image FP8 model.
+
+**Models downloaded on first startup (~28GB total):**
+- `Qwen-Image_fp8.safetensors` (20GB) - Main diffusion model
+- `qwen_image_text_encoder.safetensors` (7GB) - Text encoder
+- `qwen_image_vae.safetensors` (300MB) - VAE
+
+**Requirements:**
+- RunPod Network Volume (50GB minimum)
+- RTX 4090 or equivalent (24GB VRAM)
+
+## Qwen2.5-VL Captioning
+
+This fork includes [ComfyUI-Qwen2_5-VL](https://github.com/MakkiShizu/ComfyUI-Qwen2_5-VL) for vision-language tasks like image captioning, image comparison, and video description.
+
+### Supported Input Types
+
+| Type | Description |
+|------|-------------|
+| Single Image | Describe or analyze one image |
+| Multi-Image | Compare multiple images or analyze a batch |
+| Video | Describe video content (native video input) |
+| Text Only | Text-based inference without visual input |
+
+### Available Models
+
+| Model | VRAM (8-bit) | Notes |
+|-------|--------------|-------|
+| `Qwen/Qwen2.5-VL-3B-Instruct` | ~3 GB | Fastest, good for simple tasks |
+| `Qwen/Qwen2.5-VL-7B-Instruct` | ~7 GB | Recommended balance |
+| `Qwen/Qwen2.5-VL-32B-Instruct` | ~33 GB | Higher quality |
+| `Qwen/Qwen2.5-VL-72B-Instruct` | ~67 GB | Best quality, requires H100 |
+
+AWQ variants available for each model (4-bit quantization).
+
+### Nodes
+
+| Node | Description |
+|------|-------------|
+| `DownloadAndLoadQwen2_5_VLModel` | Load VL model (auto-downloads on first use) |
+| `Qwen2_5_VL_Run` | Run inference with image/video/text input |
+| `Qwen2_5_VL_Run_Advanced` | Inference with system prompt support |
+| `BatchImageLoaderToLocalFiles` | Load multiple images for batch analysis |
+
+### Example Workflow (Image Captioning)
+
+```json
+{
+  "1": {
+    "inputs": { "image": "input.png", "upload": "image" },
+    "class_type": "LoadImage"
+  },
+  "2": {
+    "inputs": {
+      "model": "Qwen/Qwen2.5-VL-7B-Instruct",
+      "quantization": "8bit",
+      "attention": "sdpa"
+    },
+    "class_type": "DownloadAndLoadQwen2_5_VLModel"
+  },
+  "3": {
+    "inputs": {
+      "text": "Describe this image in detail",
+      "Qwen2_5_VL_model": ["2", 0],
+      "image": ["1", 0],
+      "video_decode_method": "torchvision",
+      "max_new_tokens": 256,
+      "min_pixels": 256,
+      "max_pixels": 1280,
+      "total_pixels": 20480,
+      "seed": 42
+    },
+    "class_type": "Qwen2_5_VL_Run"
+  },
+  "4": {
+    "inputs": { "text": ["3", 0] },
+    "class_type": "ShowText|pysssss"
+  }
+}
+```
+
+### Response Format
+
+Text output is returned in the `output.text` array:
+
+```json
+{
+  "status": "COMPLETED",
+  "output": {
+    "text": [
+      { "node_id": "4", "type": "text", "data": "A detailed description of the image..." }
+    ]
+  }
+}
+```
+
+### Storage
+
+VL models are stored on the Network Volume at `/runpod-volume/models/VLM/` for persistence across cold starts. First captioning request triggers ~15GB download for 7B model.
+
+## Scripts
+
+| Script | Description |
+|--------|-------------|
+| `bin/build [tag]` | Build Docker image |
+| `bin/push [tag]` | Push to Docker Hub |
+| `bin/test-local` | Run locally with docker-compose |
+
+---
+
+## Original README
 
 <p align="center">
   <img src="assets/worker_sitting_in_comfy_chair.jpg" title="Worker sitting in comfy chair" />
