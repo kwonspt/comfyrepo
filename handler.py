@@ -13,6 +13,38 @@ import uuid
 import tempfile
 import socket
 import traceback
+import logging
+
+# ---------------------------------------------------------------------------
+# Diagnostic logging for network volume debugging
+# ---------------------------------------------------------------------------
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Check extra_model_paths.yaml
+extra_model_paths_file = "/comfyui/extra_model_paths.yaml"
+if os.path.isfile(extra_model_paths_file):
+    logger.info(f"extra_model_paths.yaml found at {extra_model_paths_file}")
+    with open(extra_model_paths_file, "r") as f:
+        logger.info(f"extra_model_paths.yaml content:\n{f.read()}")
+else:
+    logger.warning(f"extra_model_paths.yaml NOT found at {extra_model_paths_file}")
+
+# Check network volume mount
+runpod_volume = "/runpod-volume"
+if os.path.isdir(runpod_volume):
+    logger.info(f"Network volume mounted at {runpod_volume}")
+    try:
+        contents = os.listdir(runpod_volume)
+        logger.info(f"{runpod_volume} contents: {contents}")
+        models_dir = os.path.join(runpod_volume, "models")
+        if os.path.isdir(models_dir):
+            models_contents = os.listdir(models_dir)
+            logger.info(f"{models_dir} contents: {models_contents}")
+    except Exception as e:
+        logger.error(f"Error listing {runpod_volume}: {e}")
+else:
+    logger.warning(f"Network volume NOT mounted at {runpod_volume}")
 
 # Time to wait between API check attempts in milliseconds
 COMFY_API_AVAILABLE_INTERVAL_MS = 50
