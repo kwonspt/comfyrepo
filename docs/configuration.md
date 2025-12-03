@@ -23,90 +23,10 @@ This document outlines the environment variables available for configuring the `
 | `WEBSOCKET_RECONNECT_ATTEMPTS` | Number of websocket reconnection attempts when connection drops during job execution.                                  | `5`     |
 | `WEBSOCKET_RECONNECT_DELAY_S`  | Delay in seconds between websocket reconnection attempts.                                                              | `3`     |
 | `WEBSOCKET_TRACE`              | Enable low-level websocket frame tracing for protocol debugging. Set to `true` only when diagnosing connection issues. | `false` |
-| `NETWORK_VOLUME_DEBUG`         | Enable detailed network volume diagnostics in worker logs. Useful for debugging model path issues. See [Network Volume Configuration](#network-volume-configuration) below. | `false` |
+| `NETWORK_VOLUME_DEBUG`         | Enable detailed network volume diagnostics in worker logs. Useful for debugging model path issues. See [Network Volumes & Model Paths](network-volumes.md). | `false` |
 
 > [!TIP]
 > **For troubleshooting:** Set `COMFY_LOG_LEVEL=DEBUG` to get detailed logs when ComfyUI crashes or behaves unexpectedly. This helps identify the exact point of failure in your workflows.
-
-## Network Volume Configuration
-
-When using a RunPod network volume to store your models, the worker expects a specific directory structure. If ComfyUI is not finding your models, enable diagnostics by setting `NETWORK_VOLUME_DEBUG=true`.
-
-### Expected Directory Structure
-
-Models must be placed in the following structure on your network volume:
-
-```
-/runpod-volume/
-└── models/
-    ├── checkpoints/      # Stable Diffusion checkpoints (.safetensors, .ckpt)
-    ├── loras/            # LoRA files (.safetensors, .pt)
-    ├── vae/              # VAE models (.safetensors, .pt)
-    ├── clip/             # CLIP models (.safetensors, .pt)
-    ├── clip_vision/      # CLIP Vision models
-    ├── controlnet/       # ControlNet models (.safetensors, .pt)
-    ├── embeddings/       # Textual inversion embeddings (.safetensors, .pt)
-    ├── upscale_models/   # Upscaling models (.safetensors, .pt)
-    ├── unet/             # UNet models
-    └── configs/          # Model configs (.yaml, .json)
-```
-
-### Supported File Extensions
-
-ComfyUI only recognizes files with specific extensions:
-
-| Model Type       | Supported Extensions                |
-| ---------------- | ----------------------------------- |
-| Checkpoints      | `.safetensors`, `.ckpt`, `.pt`, `.pth`, `.bin` |
-| LoRAs            | `.safetensors`, `.pt`               |
-| VAE              | `.safetensors`, `.pt`, `.bin`       |
-| CLIP             | `.safetensors`, `.pt`, `.bin`       |
-| ControlNet       | `.safetensors`, `.pt`, `.pth`, `.bin` |
-| Embeddings       | `.safetensors`, `.pt`, `.bin`       |
-| Upscale Models   | `.safetensors`, `.pt`, `.pth`       |
-
-> [!WARNING]
-> **Common Issues:**
-> - Models placed directly in `/runpod-volume/checkpoints/` instead of `/runpod-volume/models/checkpoints/` will not be found.
-> - Files with incorrect extensions (e.g., `.txt`, `.zip`) will be ignored.
-> - Empty directories or missing subdirectories are fine—only create the folders you need.
-
-### Debugging Network Volume Issues
-
-1. **Enable diagnostics** by adding `NETWORK_VOLUME_DEBUG=true` to your endpoint's environment variables.
-
-2. **Send a test request** to your endpoint (any request will trigger the diagnostics).
-
-3. **Check the worker logs** in the RunPod console. You'll see detailed output like:
-
-```
-======================================================================
-NETWORK VOLUME DIAGNOSTICS (NETWORK_VOLUME_DEBUG=true)
-======================================================================
-
-[1] Checking extra_model_paths.yaml configuration...
-    ✓ FOUND: /comfyui/extra_model_paths.yaml
-
-[2] Checking network volume mount at /runpod-volume...
-    ✓ MOUNTED: /runpod-volume
-
-[3] Checking directory structure...
-    ✓ FOUND: /runpod-volume/models
-
-[4] Scanning model directories...
-
-    checkpoints/:
-      - my-model.safetensors (6.5 GB)
-
-    loras/:
-      - style-lora.safetensors (144.2 MB)
-
-[5] Summary
-    ✓ Models found on network volume!
-======================================================================
-```
-
-4. **Disable diagnostics** once your issue is resolved by removing the environment variable or setting it to `false`.
 
 ## AWS S3 Upload Configuration
 
