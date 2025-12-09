@@ -80,6 +80,7 @@ RUN uv pip install runpod requests websocket-client
 ADD src/start.sh handler.py test_input.json ./
 RUN chmod +x /start.sh
 
+ENV KILL_CACHE=1
 # Add script to install custom nodes
 COPY scripts/comfy-node-install.sh /usr/local/bin/comfy-node-install
 RUN chmod +x /usr/local/bin/comfy-node-install
@@ -109,7 +110,12 @@ RUN comfy --workspace /comfyui node install https://github.com/1038lab/ComfyUI-R
 RUN comfy --workspace /comfyui node install https://github.com/kijai/ComfyUI-KJNodes.git
 
 # Install PuLID-FLUX for character identity preservation in scene assembly
-RUN comfy --workspace /comfyui node install https://github.com/balazik/ComfyUI-PuLID-Flux.git
+# Install all dependencies from requirements.txt: facexlib, insightface, onnxruntime[-gpu], ftfy, timm
+RUN comfy --workspace /comfyui node install https://github.com/balazik/ComfyUI-PuLID-Flux.git \
+    && uv pip install facexlib insightface onnxruntime onnxruntime-gpu ftfy timm
+
+# Install unzip for InsightFace model extraction at runtime
+RUN apt-get update && apt-get install -y unzip && rm -rf /var/lib/apt/lists/*
 
 # Copy provisioning scripts (after custom nodes for better layer caching)
 # These change more frequently than custom nodes
