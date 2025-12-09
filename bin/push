@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -e
+
+cd "$(dirname "$0")/.."
+
+IMAGE_NAME="${DOCKER_IMAGE:-hoblin/runpod-worker-comfy}"
+TAG="${1:-dev}"
+
+echo "==> Pushing image: ${IMAGE_NAME}:${TAG}"
+docker push "${IMAGE_NAME}:${TAG}"
+
+# Also push latest if this is a version tag (not dev)
+if [[ "$TAG" != "dev" && "$TAG" != "test" ]]; then
+  echo "==> Pushing latest tag"
+  docker push "${IMAGE_NAME}:latest"
+fi
+
+echo "==> Push complete: ${IMAGE_NAME}:${TAG}"

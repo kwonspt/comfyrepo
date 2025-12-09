@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+cd "$(dirname "$0")/.."
+
+IMAGE_NAME="${DOCKER_IMAGE:-hoblin/runpod-worker-comfy}"
+TAG="${1:-dev}"
+
+echo "==> Building image: ${IMAGE_NAME}:${TAG}"
+docker build \
+  -t "${IMAGE_NAME}:${TAG}" \
+  --target base \
+  --platform linux/amd64 \
+  .
+
+# Also tag as latest if this is a version tag (not dev)
+if [[ "$TAG" != "dev" && "$TAG" != "test" ]]; then
+  echo "==> Tagging as latest"
+  docker tag "${IMAGE_NAME}:${TAG}" "${IMAGE_NAME}:latest"
+fi
+
+echo "==> Build complete: ${IMAGE_NAME}:${TAG}"

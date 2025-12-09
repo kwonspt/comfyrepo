@@ -14,3 +14,5 @@ runpod_worker_comfy:
   text_encoders: models/text_encoders/
   VLM: models/VLM/
   RMBG: models/RMBG/
+  pulid: models/pulid/
+  insightface: models/insightface/

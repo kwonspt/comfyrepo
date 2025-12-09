@@ -91,18 +91,6 @@ ENV PIP_NO_INPUT=1
 COPY scripts/comfy-manager-set-mode.sh /usr/local/bin/comfy-manager-set-mode
 RUN chmod +x /usr/local/bin/comfy-manager-set-mode
 
-# Copy Qwen-Image provisioning script
-COPY scripts/provision_qwen.sh /scripts/provision_qwen.sh
-RUN chmod +x /scripts/provision_qwen.sh
-
-# Copy Z-Image provisioning script
-COPY scripts/provision_z_image.sh /scripts/provision_z_image.sh
-RUN chmod +x /scripts/provision_z_image.sh
-
-# Copy RMBG provisioning script
-COPY scripts/provision_rmbg.sh /scripts/provision_rmbg.sh
-RUN chmod +x /scripts/provision_rmbg.sh
-
 # Install Qwen2.5-VL captioning custom node
 # Requires transformers >= 4.49.0 (installed as dependency)
 # accelerate is needed for device_map="auto" in transformers
@@ -119,6 +107,15 @@ RUN comfy --workspace /comfyui node install https://github.com/1038lab/ComfyUI-R
 
 # Install KJNodes for SaveImageWithAlpha (PNG with transparency support)
 RUN comfy --workspace /comfyui node install https://github.com/kijai/ComfyUI-KJNodes.git
+
+# Install PuLID-FLUX for character identity preservation in scene assembly
+RUN comfy --workspace /comfyui node install https://github.com/balazik/ComfyUI-PuLID-Flux.git
+
+# Copy provisioning scripts (after custom nodes for better layer caching)
+# These change more frequently than custom nodes
+COPY scripts/lib/ /scripts/lib/
+COPY scripts/provision_*.sh /scripts/
+RUN chmod +x /scripts/*.sh /scripts/lib/*.sh
 
 # Set the default command to run when starting the container
 CMD ["/start.sh"]

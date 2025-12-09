@@ -32,6 +32,18 @@ if [ -f /scripts/provision_qwen.sh ]; then
     /scripts/provision_qwen.sh
 fi
 
+# Provision Z-Image models if not present
+if [ -f /scripts/provision_z_image.sh ]; then
+    echo "worker-comfyui: Running Z-Image model provisioning"
+    /scripts/provision_z_image.sh
+fi
+
+# Provision Kontext + PuLID models if not present
+if [ -f /scripts/provision_kontext_pulid.sh ]; then
+    echo "worker-comfyui: Running Kontext + PuLID model provisioning"
+    /scripts/provision_kontext_pulid.sh
+fi
+
 echo "worker-comfyui: Starting ComfyUI"
 
 # Allow operators to tweak verbosity; default is DEBUG.

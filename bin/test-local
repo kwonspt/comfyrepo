@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+cd "$(dirname "$0")/.."
+
+echo "==> Starting local worker with docker-compose..."
+echo "    ComfyUI: http://localhost:8188"
+echo "    Worker API: http://localhost:8000"
+
+docker-compose up "$@"
