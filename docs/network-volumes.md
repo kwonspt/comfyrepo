@@ -26,7 +26,7 @@ If you use the S3-compatible API, the same paths map as:
 
 > **Important: Path on the network storage**
 >
-> When you upload or configure paths **on the network storage itself** (e.g. via S3), use paths **relative to the volume root**. For example, put models at `/models/[loras, vae, diffusion_models, etc]/file.ext`, **not** `/runpod-volume/models/...`. The worker mounts the volume at `/runpod-volume`, so if you use `/runpod-volume` in the path on the storage, the container will see `runpod-volume/runpod-volume/models/...` and models will not be found.
+> When you upload or configure paths **on the network storage itself** (e.g. via S3), use paths **relative to the volume root**. For example, put models at `/models/[model]/file_name.ext`, **not** `/runpod-volume/models/...`. The worker mounts the volume at `/runpod-volume`, so if you use `/runpod-volume` in the path on the storage, the container will see `runpod-volume/runpod-volume/models/...` and models will not be found.
 
 ## Expected Directory Structure
 
@@ -51,31 +51,21 @@ Models must be placed in the following structure on your network volume:
 >
 > Only create the subdirectories you actually need; empty or missing folders are fine.
 
-## Uploading files via the S3-compatible API
+## Uploading models via the S3-compatible API
 
 You can upload models to your network volume using RunPod’s [S3-compatible API](https://docs.runpod.io/storage/s3-api). You need an **S3 API key** (separate from your RunPod API key): create one under **Settings → S3 API Keys** in the RunPod console. The access key and secret are shown there; the docs explain [setup and authentication](https://docs.runpod.io/storage/s3-api#setup-and-authentication) in detail.
-
-With the [AWS CLI](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3/index.html) configured (or by passing credentials in the environment), upload a file like this:
 
 ```bash
 AWS_ACCESS_KEY_ID=your_access_key \
 AWS_SECRET_ACCESS_KEY=your_secret_key \
 aws s3 cp \
-  --region DATACENTER \
-  --endpoint-url https://s3api-DATACENTER.runpod.io \
-  /path/to/local/model.safetensors \
-  s3://NETWORK_VOLUME_ID/models/diffusion_models/
+  --region [REGION] \
+  --endpoint-url ENDPOINT_URL \
+  /path/to/local/file.ext \
+  s3://BUCKET_NAME/models/[model]/file_name.ext
 ```
 
-Replace:
-
-- `your_access_key` / `your_secret_key` — your RunPod S3 API key (from [RunPod S3 API Keys](https://docs.runpod.io/storage/s3-api#setup-and-authentication)).
-- `DATACENTER` — the datacenter where the volume lives (e.g. `eu-ro-1`). [Supported endpoints](https://docs.runpod.io/storage/s3-api#datacenter-availability) are listed in the RunPod S3 API docs.
-- `NETWORK_VOLUME_ID` — your network volume ID (from the RunPod console).
-- `/path/to/local/model.safetensors` — local path to the file to upload.
-- `models/diffusion_models/` — path on the volume (relative to the volume root; do **not** use `/runpod-volume/` here).
-
-The file will then appear at `/runpod-volume/models/diffusion_models/model.safetensors` inside the worker.
+The file will then appear at `/runpod-volume/models/[model]/file_name.ext` inside the worker.
 
 ## Supported File Extensions
 
