@@ -1,0 +1,1036 @@
+{
+  "422": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "lora_1": {
+        "on": true,
+        "lora": "LOW/wan22_low_lora.safetensors",
+        "strength": 0.8
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "911:426",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "Loras LOW"
+    }
+  },
+  "436": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "lora_1": {
+        "on": true,
+        "lora": "HIGH/DR34ML4Y_I2V_14B_HIGH_V2.safetensors",
+        "strength": 0.65
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "911:425",
+        0
+      ],
+      "clip": [
+        "911:1142",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "Loras HIGH"
+    }
+  },
+  "644": {
+    "inputs": {
+      "options": "Intermediate and Utility",
+      "filenames": [
+        "958",
+        0
+      ]
+    },
+    "class_type": "VHS_PruneOutputs",
+    "_meta": {
+      "title": "Prune Outputs 🎥🅥🅗🅢"
+    }
+  },
+  "958": {
+    "inputs": {
+      "frame_rate": [
+        "911:457",
+        0
+      ],
+      "loop_count": 0,
+      "filename_prefix": "video/2026-02-01/211601",
+      "format": "video/webm",
+      "pix_fmt": "yuv420p",
+      "crf": 20,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "911:1188",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "959": {
+    "inputs": {
+      "image": "IMG_0880.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "First-Frame-Image"
+    }
+  },
+  "911:1013": {
+    "inputs": {
+      "value": true
+    },
+    "class_type": "PrimitiveBoolean",
+    "_meta": {
+      "title": "Boolean"
+    }
+  },
+  "911:963": {
+    "inputs": {
+      "samples": [
+        "911:1180",
+        0
+      ],
+      "vae": [
+        "911:1143",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "911:960": {
+    "inputs": {
+      "width": [
+        "911:1072:317",
+        0
+      ],
+      "height": [
+        "911:1072:317",
+        1
+      ],
+      "length": [
+        "911:1073",
+        0
+      ],
+      "batch_size": 1,
+      "positive": [
+        "911:1190",
+        0
+      ],
+      "negative": [
+        "911:1192",
+        0
+      ],
+      "vae": [
+        "911:1143",
+        0
+      ],
+      "start_image": [
+        "911:1072:329",
+        0
+      ]
+    },
+    "class_type": "WanImageToVideo",
+    "_meta": {
+      "title": "WanImageToVideo"
+    }
+  },
+  "911:426": {
+    "inputs": {
+      "shift": 5.5,
+      "model": [
+        "911:1164",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingSD3",
+    "_meta": {
+      "title": "Sigma Shift Low"
+    }
+  },
+  "911:457": {
+    "inputs": {
+      "value": 16
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "FPS"
+    }
+  },
+  "911:1073": {
+    "inputs": {
+      "expression": "(round((a * b) / 8) * 8) +1",
+      "a": [
+        "911:1075",
+        0
+      ],
+      "b": [
+        "911:457",
+        0
+      ]
+    },
+    "class_type": "MathExpression|pysssss",
+    "_meta": {
+      "title": "frames logic 🐍"
+    }
+  },
+  "911:1075": {
+    "inputs": {
+      "value": 5
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Seconds"
+    }
+  },
+  "911:915": {
+    "inputs": {
+      "seed": 547353423272137
+    },
+    "class_type": "easy seed",
+    "_meta": {
+      "title": "EasySeed"
+    }
+  },
+  "911:914": {
+    "inputs": {
+      "steps_total": 4,
+      "refiner_step": 2,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "linear_quadratic"
+    },
+    "class_type": "KSampler Config (rgthree)",
+    "_meta": {
+      "title": "Sampling"
+    }
+  },
+  "911:1076": {
+    "inputs": {
+      "model": [
+        "436",
+        0
+      ]
+    },
+    "class_type": "CFGZeroStar",
+    "_meta": {
+      "title": "CFGZeroStar"
+    }
+  },
+  "911:1077": {
+    "inputs": {
+      "model": [
+        "422",
+        0
+      ]
+    },
+    "class_type": "CFGZeroStar",
+    "_meta": {
+      "title": "CFGZeroStar"
+    }
+  },
+  "911:1008": {
+    "inputs": {
+      "value": true
+    },
+    "class_type": "PrimitiveBoolean",
+    "_meta": {
+      "title": "Boolean"
+    }
+  },
+  "911:1018": {
+    "inputs": {
+      "value": false
+    },
+    "class_type": "PrimitiveBoolean",
+    "_meta": {
+      "title": "Boolean"
+    }
+  },
+  "911:425": {
+    "inputs": {
+      "shift": 5.5,
+      "model": [
+        "911:1162",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingSD3",
+    "_meta": {
+      "title": "Sigma Shift High"
+    }
+  },
+  "911:1166": {
+    "inputs": {
+      "value": true
+    },
+    "class_type": "PrimitiveBoolean",
+    "_meta": {
+      "title": "Boolean"
+    }
+  },
+  "911:1169": {
+    "inputs": {
+      "boolean": [
+        "911:1157",
+        0
+      ],
+      "on_true": [
+        "911:1155",
+        0
+      ],
+      "on_false": [
+        "911:1227",
+        1
+      ]
+    },
+    "class_type": "easy ifElse",
+    "_meta": {
+      "title": "If else"
+    }
+  },
+  "911:1168": {
+    "inputs": {
+      "boolean": [
+        "911:1157",
+        0
+      ],
+      "on_true": [
+        "911:1154",
+        0
+      ],
+      "on_false": [
+        "911:1231",
+        1
+      ]
+    },
+    "class_type": "easy ifElse",
+    "_meta": {
+      "title": "If else"
+    }
+  },
+  "911:1003": {
+    "inputs": {
+      "boolean": [
+        "911:1016",
+        0
+      ],
+      "on_true": [
+        "911:963",
+        0
+      ],
+      "on_false": [
+        "422",
+        0
+      ]
+    },
+    "class_type": "easy ifElse",
+    "_meta": {
+      "title": "If else"
+    }
+  },
+  "911:961": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": [
+        "911:915",
+        0
+      ],
+      "steps": [
+        "911:914",
+        0
+      ],
+      "cfg": [
+        "911:914",
+        2
+      ],
+      "sampler_name": [
+        "911:914",
+        3
+      ],
+      "scheduler": [
+        "911:914",
+        4
+      ],
+      "start_at_step": 0,
+      "end_at_step": [
+        "911:914",
+        1
+      ],
+      "return_with_leftover_noise": "enable",
+      "model": [
+        "911:1076",
+        0
+      ],
+      "positive": [
+        "911:960",
+        0
+      ],
+      "negative": [
+        "911:960",
+        1
+      ],
+      "latent_image": [
+        "911:960",
+        2
+      ]
+    },
+    "class_type": "KSamplerAdvanced",
+    "_meta": {
+      "title": "KSampler (High)"
+    }
+  },
+  "911:1188": {
+    "inputs": {
+      "anything": [
+        "911:1099",
+        0
+      ]
+    },
+    "class_type": "easy clearCacheAll",
+    "_meta": {
+      "title": "Clear Cache All"
+    }
+  },
+  "911:1044": {
+    "inputs": {
+      "text": "She stands up and turns around, slaps her own bare ass hard",
+      "clip": [
+        "436",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Positive prompt"
+    }
+  },
+  "911:1045": {
+    "inputs": {
+      "text": "censored, mosaic censoring, bar censor, pixelated, glowing, bloom, blurry, out of focus, low detail, bad anatomy, ugly, overexposed, underexposed, distorted face, extra limbs, cartoonish, 3d render artifacts, duplicate people, unnatural lighting, bad composition, missing shadows, low resolution, poorly textured, glitch, noise, grain, static, motionless, still frame, stylized, artwork, painting, illustration, many people in background, three legs, walking backward, unnatural skin tone, discolored eyelid, red eyelids, closed eyes, poorly drawn hands, extra fingers, fused fingers, poorly drawn face, deformed, disfigured, malformed limbs, fog, mist, voluminous eyelashes,",
+      "clip": [
+        "436",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Negative prompt"
+    }
+  },
+  "911:1192": {
+    "inputs": {
+      "anything": [
+        "911:1045",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "Clean VRAM Used"
+    }
+  },
+  "911:1190": {
+    "inputs": {
+      "anything": [
+        "911:1044",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "Clean VRAM Used"
+    }
+  },
+  "911:999": {
+    "inputs": {
+      "method": "hm-mvgd-hm",
+      "strength": 0.75,
+      "multithread": true,
+      "image_ref": [
+        "911:1072:329",
+        0
+      ],
+      "image_target": [
+        "911:1003",
+        0
+      ]
+    },
+    "class_type": "ColorMatch",
+    "_meta": {
+      "title": "Color Match"
+    }
+  },
+  "911:1184": {
+    "inputs": {
+      "anything": [
+        "911:999",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "Clean VRAM Used"
+    }
+  },
+  "911:968": {
+    "inputs": {
+      "add_noise": "disable",
+      "noise_seed": [
+        "911:915",
+        0
+      ],
+      "steps": [
+        "911:914",
+        0
+      ],
+      "cfg": [
+        "911:914",
+        2
+      ],
+      "sampler_name": [
+        "911:914",
+        3
+      ],
+      "scheduler": [
+        "911:914",
+        4
+      ],
+      "start_at_step": [
+        "911:914",
+        1
+      ],
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable",
+      "model": [
+        "911:1077",
+        0
+      ],
+      "positive": [
+        "911:960",
+        0
+      ],
+      "negative": [
+        "911:960",
+        1
+      ],
+      "latent_image": [
+        "911:961",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced",
+    "_meta": {
+      "title": "KSampler (Low)"
+    }
+  },
+  "911:1180": {
+    "inputs": {
+      "anything": [
+        "911:968",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "Clean VRAM Used"
+    }
+  },
+  "911:997": {
+    "inputs": {
+      "boolean": [
+        "911:1019",
+        0
+      ],
+      "on_true": [
+        "911:1184",
+        0
+      ],
+      "on_false": [
+        "911:1003",
+        0
+      ]
+    },
+    "class_type": "easy ifElse",
+    "_meta": {
+      "title": "If else"
+    }
+  },
+  "911:1165": {
+    "inputs": {
+      "value": false
+    },
+    "class_type": "PrimitiveBoolean",
+    "_meta": {
+      "title": "Boolean"
+    }
+  },
+  "911:1229": {
+    "inputs": {},
+    "class_type": "Context (rgthree)",
+    "_meta": {
+      "title": "Context (rgthree)"
+    }
+  },
+  "911:1226": {
+    "inputs": {
+      "model": [
+        "911:1172",
+        0
+      ]
+    },
+    "class_type": "Context (rgthree)",
+    "_meta": {
+      "title": "Context (rgthree)"
+    }
+  },
+  "911:1172": {
+    "inputs": {
+      "unet_name": "DasiwaWAN22I2V14BSynthseduction_q8High.gguf"
+    },
+    "class_type": "UnetLoaderGGUF",
+    "_meta": {
+      "title": "Unet Loader (GGUF)"
+    }
+  },
+  "911:1230": {
+    "inputs": {},
+    "class_type": "Context (rgthree)",
+    "_meta": {
+      "title": "Context (rgthree)"
+    }
+  },
+  "911:1228": {
+    "inputs": {
+      "model": [
+        "911:1173",
+        0
+      ]
+    },
+    "class_type": "Context (rgthree)",
+    "_meta": {
+      "title": "Context (rgthree)"
+    }
+  },
+  "911:1227": {
+    "inputs": {
+      "ctx_01": [
+        "911:1229",
+        0
+      ],
+      "ctx_02": [
+        "911:1226",
+        0
+      ]
+    },
+    "class_type": "Context Switch (rgthree)",
+    "_meta": {
+      "title": "Context Switch (rgthree)"
+    }
+  },
+  "911:1231": {
+    "inputs": {
+      "ctx_01": [
+        "911:1230",
+        0
+      ],
+      "ctx_02": [
+        "911:1228",
+        0
+      ]
+    },
+    "class_type": "Context Switch (rgthree)",
+    "_meta": {
+      "title": "Context Switch (rgthree)"
+    }
+  },
+  "911:1232": {
+    "inputs": {
+      "preview": "True",
+      "previewMode": null,
+      "source": [
+        "911:1157",
+        0
+      ]
+    },
+    "class_type": "PreviewAny",
+    "_meta": {
+      "title": "Preview as Text"
+    }
+  },
+  "911:1157": {
+    "inputs": {
+      "any_01": [
+        "911:1166",
+        0
+      ],
+      "any_02": [
+        "911:1165",
+        0
+      ]
+    },
+    "class_type": "Any Switch (rgthree)",
+    "_meta": {
+      "title": "Any Switch (rgthree)"
+    }
+  },
+  "911:1159": {
+    "inputs": {
+      "any_02": [
+        "911:1165",
+        0
+      ]
+    },
+    "class_type": "Any Switch (rgthree)",
+    "_meta": {
+      "title": "Any Switch (rgthree)"
+    }
+  },
+  "911:1233": {
+    "inputs": {
+      "preview": "False",
+      "previewMode": null,
+      "source": [
+        "911:1159",
+        0
+      ]
+    },
+    "class_type": "PreviewAny",
+    "_meta": {
+      "title": "Preview as Text"
+    }
+  },
+  "911:1016": {
+    "inputs": {
+      "any_01": [
+        "911:1008",
+        0
+      ]
+    },
+    "class_type": "Any Switch (rgthree)",
+    "_meta": {
+      "title": "Boolean"
+    }
+  },
+  "911:1234": {
+    "inputs": {
+      "preview": "True",
+      "previewMode": null,
+      "source": [
+        "911:1016",
+        0
+      ]
+    },
+    "class_type": "PreviewAny",
+    "_meta": {
+      "title": "Preview as Text"
+    }
+  },
+  "911:1019": {
+    "inputs": {
+      "any_01": [
+        "911:1013",
+        0
+      ],
+      "any_02": [
+        "911:1018",
+        0
+      ]
+    },
+    "class_type": "Any Switch (rgthree)",
+    "_meta": {
+      "title": "Any Switch (rgthree)"
+    }
+  },
+  "911:1235": {
+    "inputs": {
+      "preview": "True",
+      "previewMode": null,
+      "source": [
+        "911:1019",
+        0
+      ]
+    },
+    "class_type": "PreviewAny",
+    "_meta": {
+      "title": "Preview as Text"
+    }
+  },
+  "911:1098": {
+    "inputs": {
+      "any_02": [
+        "911:1101",
+        0
+      ]
+    },
+    "class_type": "Any Switch (rgthree)",
+    "_meta": {
+      "title": "Any Switch (rgthree)"
+    }
+  },
+  "911:1072:316": {
+    "inputs": {
+      "expression": "round(sqrt(a * 1000000 * (b / c)) / 16) * 16",
+      "a": [
+        "911:1072:327",
+        0
+      ],
+      "b": [
+        "911:1072:328",
+        0
+      ],
+      "c": [
+        "911:1072:328",
+        1
+      ]
+    },
+    "class_type": "MathExpression|pysssss",
+    "_meta": {
+      "title": "Width 🐍"
+    }
+  },
+  "911:1072:318": {
+    "inputs": {
+      "expression": "round((a / (b / c)) / 16) * 16",
+      "a": [
+        "911:1072:316",
+        0
+      ],
+      "b": [
+        "911:1072:328",
+        0
+      ],
+      "c": [
+        "911:1072:328",
+        1
+      ]
+    },
+    "class_type": "MathExpression|pysssss",
+    "_meta": {
+      "title": "Height 🐍"
+    }
+  },
+  "911:1072:320": {
+    "inputs": {
+      "value": 0.4
+    },
+    "class_type": "FloatConstant",
+    "_meta": {
+      "title": "Float Constant"
+    }
+  },
+  "911:1072:327": {
+    "inputs": {
+      "any_03": [
+        "911:1072:320",
+        0
+      ]
+    },
+    "class_type": "Any Switch (rgthree)",
+    "_meta": {
+      "title": "Any Switch (rgthree)"
+    }
+  },
+  "911:1072:328": {
+    "inputs": {
+      "image": [
+        "959",
+        0
+      ]
+    },
+    "class_type": "GetImageSize",
+    "_meta": {
+      "title": "Get Image Size"
+    }
+  },
+  "911:1072:317": {
+    "inputs": {
+      "image": [
+        "911:1072:329",
+        0
+      ]
+    },
+    "class_type": "GetImageSize",
+    "_meta": {
+      "title": "Get Image Size"
+    }
+  },
+  "911:1072:329": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "width": [
+        "911:1072:316",
+        0
+      ],
+      "height": [
+        "911:1072:318",
+        0
+      ],
+      "crop": "disabled",
+      "image": [
+        "959",
+        0
+      ]
+    },
+    "class_type": "ImageScale",
+    "_meta": {
+      "title": "Upscale Image"
+    }
+  },
+  "911:1101": {
+    "inputs": {
+      "value": false
+    },
+    "class_type": "PrimitiveBoolean",
+    "_meta": {
+      "title": "Boolean"
+    }
+  },
+  "911:1236": {
+    "inputs": {
+      "preview": "False",
+      "previewMode": null,
+      "source": [
+        "911:1098",
+        0
+      ]
+    },
+    "class_type": "PreviewAny",
+    "_meta": {
+      "title": "Preview as Text"
+    }
+  },
+  "911:1099": {
+    "inputs": {
+      "boolean": false,
+      "on_true": [
+        "911:997",
+        0
+      ],
+      "on_false": [
+        "911:997",
+        0
+      ]
+    },
+    "class_type": "easy ifElse",
+    "_meta": {
+      "title": "If else"
+    }
+  },
+  "911:1162": {
+    "inputs": {
+      "boolean": [
+        "911:1159",
+        0
+      ],
+      "on_true": [
+        "911:1169",
+        0
+      ],
+      "on_false": [
+        "911:1169",
+        0
+      ]
+    },
+    "class_type": "easy ifElse",
+    "_meta": {
+      "title": "If else"
+    }
+  },
+  "911:1164": {
+    "inputs": {
+      "boolean": [
+        "911:1159",
+        0
+      ],
+      "on_true": [
+        "911:1168",
+        0
+      ],
+      "on_false": [
+        "911:1168",
+        0
+      ]
+    },
+    "class_type": "easy ifElse",
+    "_meta": {
+      "title": "If else"
+    }
+  },
+  "911:1142": {
+    "inputs": {
+      "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+      "type": "wan",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "911:1154": {
+    "inputs": {
+      "sage_attention": "auto",
+      "allow_compile": false,
+      "model": [
+        "911:1231",
+        1
+      ]
+    },
+    "class_type": "PathchSageAttentionKJ",
+    "_meta": {
+      "title": "Patch Sage Attention KJ"
+    }
+  },
+  "911:1155": {
+    "inputs": {
+      "sage_attention": "auto",
+      "allow_compile": false,
+      "model": [
+        "911:1227",
+        1
+      ]
+    },
+    "class_type": "PathchSageAttentionKJ",
+    "_meta": {
+      "title": "Patch Sage Attention KJ"
+    }
+  },
+  "911:1173": {
+    "inputs": {
+      "unet_name": "DasiwaWAN22I2V14BSynthseduction_q8Low.gguf"
+    },
+    "class_type": "UnetLoaderGGUF",
+    "_meta": {
+      "title": "Unet Loader (GGUF)"
+    }
+  },
+  "911:1143": {
+    "inputs": {
+      "vae_name": "WAN/wan_2.1_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  }
+}
